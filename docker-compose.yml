@@ -5,15 +5,15 @@ services:
     build: ./backend
     ports:
       - "8080:8080"
-    environment:
-      - NODE_ENV=production
+    networks:
+      - app-network
 
   frontend:
     build: ./frontend
     ports:
       - "3000:3000"
-    environment:
-      - NODE_ENV=development
+    networks:
+      - app-network
     depends_on:
       - backend
 
@@ -21,11 +21,13 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
-    restart: always
-   
     ports:
       - "80:80"
-  
+    networks:
+      - app-network
     depends_on:
       - frontend
       - backend
+
+networks:
+  app-network:
