@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # version: "3.8"
 
 # services:
@@ -31,9 +30,6 @@
 #       - backend
 
 version: "3.8" # Using version 3.8
-=======
-version: "3.8"
->>>>>>> 5ae4926402c7c67199748d7eb40cb7a154e96db9
 
 services:
   backend:
@@ -76,7 +72,4 @@ services:
 
 networks:
   app-network:
-<<<<<<< HEAD
     # driver: bridge # Optional, usually implicit
-=======
->>>>>>> 5ae4926402c7c67199748d7eb40cb7a154e96db9
