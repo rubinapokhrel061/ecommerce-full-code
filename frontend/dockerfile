@@ -1,21 +1,35 @@
-# Use Node.js LTS image
+# Use official Node.js LTS version
 FROM node:18
 
-# Set working directory
 WORKDIR /app
 
-# Copy and install dependencies
+# Accept the NODE_OPTIONS argument passed from docker-compose.yml
+ARG NODE_OPTIONS
+
+# Make it an environment variable available during the build (and subsequent runs)
+ENV NODE_OPTIONS ${NODE_OPTIONS}
+
+# Copy package files and install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy .env file
+# Copy environment variables
 COPY .env.production .env
 
-# Copy all files
+# Copy source code
 COPY . .
 
-# Expose the frontend port (default is 3000)
+# Build the Next.js project
+# The NODE_OPTIONS set above will apply to this command
+RUN npm run build
+
+# Expose the port
 EXPOSE 3000
 
-# Start Next.js in development mode
-CMD ["npm", "run", "dev"]
+# The ENV NODE_OPTIONS line above will also apply to the CMD,
+# so this line is redundant if ARG/ENV is used early, but harmless.
+# You can remove it or keep it; the earlier ENV takes precedence if set.
+# ENV NODE_OPTIONS=--max-old-space-size=4096 # This line is now redundant
+
+# Run the production build
+CMD ["npm", "run", "start"]
