@@ -6,14 +6,16 @@ import { useEffect } from "react";
 const GoogleAuthCallback = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+ 
+
+  const { data: userlogin, isLoading } = useGetProtectedQuery();
+
+  const isAuthenticated = userlogin?.is_auth || false;
+  const userRole = userlogin?.role || null;
 
   useEffect(() => {
-    const token = searchParams.get("token");
-    const role = searchParams.get("role");
-
-    if (token && role) {
-      localStorage.setItem("authToken", token);
-      localStorage.setItem("role", role);
+   
+    if (isAuthenticated && userRole ) {
 
       if (role === "admin") {
         router.push("/admin/dashboard");

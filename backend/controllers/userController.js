@@ -302,7 +302,7 @@ class UserController {
       });
       // Reset Link
       const resetLink = `${process.env.FRONTEND_HOST}/account/reset-password-confirm/${user._id}/${token}`;
-
+      console.log(transporter);
       // Send password reset email
       await transporter.sendMail({
         from: process.env.EMAIL_FROM,
